@@ -3,6 +3,7 @@ package com.accounted4.commons.finance;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import lombok.Data;
 import lombok.Getter;
 
@@ -23,7 +24,7 @@ public class AlphaVantageQuoteDao {
 
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class GlobalQuote {
+    public static class GlobalQuote  implements Quote {
 
         @JsonAlias("01. symbol")
         private String symbol;
@@ -45,6 +46,16 @@ public class AlphaVantageQuoteDao {
         private BigDecimal change;
         @JsonAlias("10. change percent")
         private String changePercent;
+
+        @Override
+        public BigDecimal getClosingPrice() {
+            return getPrice();
+        }
+
+        @Override
+        public LocalDate getLocalDate() {
+            return LocalDate.parse(getLastTradingDay());
+        }
 
     }
 

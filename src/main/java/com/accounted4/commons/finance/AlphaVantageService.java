@@ -33,7 +33,7 @@ public class AlphaVantageService {
      * @return
      * @throws IOException 
      */
-    public AlphaVantageQuoteDao getQuote(final String tmxSymbol) throws IOException {
+    public AlphaVantageQuoteDao.GlobalQuote getQuote(final String tmxSymbol) throws IOException {
 
         String alphaVantageSymbol = convertTmxSymbolToAlphaVantageSymbol(tmxSymbol);
 
@@ -56,7 +56,7 @@ public class AlphaVantageService {
         ObjectMapper objectMapper = new ObjectMapper();
         AlphaVantageQuoteDao quote = objectMapper.readValue(content, AlphaVantageQuoteDao.class);
 
-        return quote;
+        return quote.getGlobalQuote();
         
     }
 
